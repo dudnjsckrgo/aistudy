@@ -1,5 +1,6 @@
-import torch
-t = torch.rand(4, 4)
-b = t.view(-1)
-print(t)
-print(b)
+import unicodedata
+def unicodeToAscii(s):
+    return ''.join(
+        c for c in unicodedata.normalize('NFD', s)
+        if unicodedata.category(c) != 'Mn'
+    )
