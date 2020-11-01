@@ -18,10 +18,6 @@ import matplotlib.pyplot as plt
 import torch
 from torch import optim
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-SOS_token = 0
-EOS_token = 1
 
 
 class Lang:
@@ -160,6 +156,11 @@ def readLangs(filename):
 
     input_lang = Lang(filename)
     return input_lang, pairs
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+SOS_token = 0
+EOS_token = 1
+
 ngpu = 1
 # Create the Discriminator
 def weights_init(m):
