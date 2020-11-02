@@ -21,3 +21,4 @@ filename="problemcorpus"
 input_lang, pairs=readLangs(filename)
 print("input_lang=================================\n",input_lang)
 # print("pairs======================\n",pairs)
+input_lang
