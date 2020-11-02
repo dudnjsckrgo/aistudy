@@ -278,7 +278,6 @@ model = models.Model([encoder_inputs, decoder_inputs], decoder_outputs)
 # 학습 방법 설정
 model.compile(optimizer='rmsprop',loss='categorical_crossentropy',metrics=['acc'])
 model.summary()
- [markdown]
 # 지금까지의 예제는 Sequential방식의 모델이었습니다. 이번에는 함수형 API모델 사용. 인코더와 디코더가 따로 분리되어야 하는데, 단순히 레이어를 추가하여 붙이는 순차형으로는 구현이 불가능
 # 
 # Model()함수로 입력과 출력을 따로 설정하며 모델 만듭니다. 그 다음 compile과 fit은 이전과 동일하게 적용하시면 됩니다. 
@@ -316,7 +315,6 @@ decoder_outputs = decoder_dense(decoder_outputs)
 # 예측 모델 디코더 설정
 decoder_model = models.Model([decoder_inputs]+decoder_states_inputs, [decoder_outputs]+decoder_states)
 decoder_model.summary()
- [markdown]
 # 예측 모델은 이미 학습된 훈련 모델의 레이어들을 그대로 재사용. 예측 모델 인코더는 훈련 모델 인코더와 동일. 그러나 예측 모델 디코더는 매번 LSTM상태값을 입력 받음. 또한 디코더의 LSTM상태를 출력값과 같이 내보내서, 다음 번 입력에 넣습니다.
 # 
 # 이렇게 하는 이유는 LSTM을 딱 한번의 타임스텝만 실행하기 때문. 그래서 매번 상태값을 새로 초기화 해야 합니다. 이와 반대로 훈련할 때는 문장 전체를 계속 LSTM으로 돌리기 때문에 자동으로 상태값이 전달됩니다.  [markdown]
@@ -372,17 +370,16 @@ for epoch in range(20):
     print()
 
 
-x_encoder[2].shape
+# x_encoder[2].shape
 
 
-input_encoder = x_encoder[2].reshape(1,30)
-input_encoder.shape
+# input_encoder = x_encoder[2].reshape(1,30)
+# input_encoder.shape
 
 
-results[0]
-print(results[0].shape) #(30,454)
-print(results.shape)    #(1,30,454)
- [markdown]
+# results[0]
+# print(results[0].shape) #(30,454)
+# print(results.shape)    #(1,30,454)
 # 학습이 진행될수록 예측 문장이 제대로 생성되는 것을 볼 수 있다. 다만 여기서의 예측은 단순히 테스트를 위한 것이라, 인코더 입력과 디코더 입력 데이터가 동시에 사용. 아래 문장 생성에서는 예측 모델을 적용하기 때문에, 오직 인코더 입력 데이터만 집어 넣습니다. 
 
 # 모델 저장
@@ -394,7 +391,6 @@ with open(r'D://PROJECT/model/word_to_index.pkl','wb')as f:
     pickle.dump(word_to_index, f, pickle.HIGHEST_PROTOCOL)
 with open(r'D://PROJECT/model/index_to_word.pkl','wb')as f:
     pickle.dump(index_to_word,f,pickle.HIGHEST_PROTOCOL)
- [markdown]
 # <pickle모듈><br>
 # 일반 텍스트를 파일로 저장할 떄는 파일 입출력 이용
 # 하지만 리스트나 클래스같은 텍스트가 아닌 자료형은 일반적인 파일 입출력 방법으로는 데이터를 저장하거나 불러올 수 없다. <br>
@@ -468,7 +464,6 @@ def generate_text(input_seq):
     sentence = convert_index_to_text(indexs, index_to_word)
 
     return sentence
- [markdown]
 # 제일 첫 단어는 START로 시작. 그리고 출력으로 나온 인덱스를 디코더 입력으로 넣고 다시 예측 반복. 상태값을 받아 다시 입력으로 같이 넣는 것에 주의. END태그가 나오면 문장 생성 종료
 
 # 문장을 인덱스로 변환
