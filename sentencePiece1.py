@@ -20,7 +20,7 @@ def get_stats(vocab):
             # print(pairs[symbols[i],symbols[i+1]])
     
     return pairs
-
+# 사회정보화 지능과제 nipa iitp nia
 get_stats(vocab)
 
 def merge_vocab(pair, v_in):
